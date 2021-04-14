@@ -1,17 +1,16 @@
-"""Top-level package for SSST."""
+"""Top-level package for sundog."""
 
-from ssst.exceptions import (
-    SsstError,
+from sundog.exceptions import (
+    SundogError,
     BaseAddressNotFoundError,
     InternalError,
     InvalidBaseAddressError,
     ModbusError,
-    QtpyError,
-    ReuseError,
-    UnexpectedEmissionError,
 )
 
 from ._version import get_versions
 
 __version__ = get_versions()["version"]
 del get_versions
+
+base_address_sentinel = b"SunS"

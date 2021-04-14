@@ -1,1 +1,1 @@
-src/ssst/_version.py export-subst
+src/sundog/_version.py export-subst

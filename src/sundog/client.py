@@ -10,7 +10,7 @@ import sunspec2.mb
 import sunspec2.modbus.client
 import pymodbus.pdu
 
-import ssst.sunspec
+import sundog
 
 
 @async_generator.asynccontextmanager
@@ -84,28 +84,28 @@ class Client:
             for maybe_base_address in self.sunspec_device.base_addr_list:
                 read_bytes = await self.read_registers(
                     address=maybe_base_address,
-                    count=len(ssst.sunspec.base_address_sentinel) // 2,
+                    count=len(sundog.base_address_sentinel) // 2,
                 )
-                if read_bytes == ssst.sunspec.base_address_sentinel:
+                if read_bytes == sundog.base_address_sentinel:
                     self.sunspec_device.base_addr = maybe_base_address
                     break
             else:
-                raise ssst.BaseAddressNotFoundError(
+                raise sundog.BaseAddressNotFoundError(
                     addresses=self.sunspec_device.base_addr_list
                 )
         else:
             read_bytes = await self.read_registers(
                 address=self.sunspec_device.base_addr,
-                count=len(ssst.sunspec.base_address_sentinel) // 2,
+                count=len(sundog.base_address_sentinel) // 2,
             )
-            if read_bytes != ssst.sunspec.base_address_sentinel:
-                raise ssst.InvalidBaseAddressError(
+            if read_bytes != sundog.base_address_sentinel:
+                raise sundog.InvalidBaseAddressError(
                     address=self.sunspec_device.base_addr,
                     value=read_bytes,
                 )
 
         address = (
-            self.sunspec_device.base_addr + len(ssst.sunspec.base_address_sentinel) // 2
+            self.sunspec_device.base_addr + len(sundog.base_address_sentinel) // 2
         )
         model_id_length = 1
         model_length_length = 1
@@ -162,7 +162,7 @@ class Client:
             The raw bytes read from the device.
 
         Raises:
-            ssst.ModbusError: When a Modbus exception response is received.
+            sundog.ModbusError: When a Modbus exception response is received.
         """
 
         response = await self.protocol.read_holding_registers(
@@ -170,7 +170,7 @@ class Client:
         )
 
         if isinstance(response, pymodbus.pdu.ExceptionResponse):
-            raise ssst.ModbusError(exception=response)
+            raise sundog.ModbusError(exception=response)
 
         return bytes(response.registers)
 
@@ -186,7 +186,7 @@ class Client:
             The new computed value of the point.
 
         Raises:
-            ssst.ModbusError: When a Modbus exception response is received.
+            sundog.ModbusError: When a Modbus exception response is received.
         """
         if point.sf is not None:
             await self.read_point(point=point.model.points[point.sf])
@@ -234,14 +234,14 @@ class Client:
             The raw bytes to be written to the device.
 
         Raises:
-            ssst.ModbusError: When a Modbus exception response is received.
+            sundog.ModbusError: When a Modbus exception response is received.
         """
         response = await self.protocol.write_registers(
             address=address, values=values, unit=0x01
         )
 
         if isinstance(response, pymodbus.pdu.ExceptionResponse):
-            raise ssst.ModbusError(exception=response)
+            raise sundog.ModbusError(exception=response)
 
     async def write_point(
         self, point: sunspec2.modbus.client.SunSpecModbusClientPoint
@@ -252,7 +252,7 @@ class Client:
             point: The SunSpec point object to write.
 
         Raises:
-            ssst.ModbusError: When a Modbus exception response is received.
+            sundog.ModbusError: When a Modbus exception response is received.
         """
         if point.sf is not None:
             await self.read_point(point=point.model.points[point.sf])

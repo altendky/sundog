@@ -1,11 +1,8 @@
 Exceptions
 ==========
 
-.. autoclass:: ssst.SsstError
-.. autoclass:: ssst.BaseAddressNotFoundError
-.. autoclass:: ssst.InternalError
-.. autoclass:: ssst.InvalidBaseAddressError
-.. autoclass:: ssst.ModbusError
-.. autoclass:: ssst.QtpyError
-.. autoclass:: ssst.ReuseError
-.. autoclass:: ssst.UnexpectedEmissionError
+.. autoclass:: sundog.SundogError
+.. autoclass:: sundog.BaseAddressNotFoundError
+.. autoclass:: sundog.InternalError
+.. autoclass:: sundog.InvalidBaseAddressError
+.. autoclass:: sundog.ModbusError

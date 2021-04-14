@@ -1,5 +1,5 @@
-SSST - SunSpec Service Tool
-===========================
+sundog - SunSpec in Trio
+========================
 
 Resources
 ---------
@@ -23,12 +23,17 @@ Resources
 Introduction
 ------------
 
-This is an exploratory application using `QTrio`_.
-In general, it will provide visually laid out widgets for data dashboards.
-The data will be read and set over Modbus TCP using the `SunSpec`_ high level protocol.
+sundog provides asynchronous access to SunSpec devices using the `Trio`_ library.
+The `SunSpec organization`_ has developed a device interface standard for the distributed energy industry.
+The communication side of the standard is built as a layer on top of `Modbus`_.
+SunSpec provides libraries including `pysunspec2`_ for loading the interface definition files and communicating with devices.
+sundog uses pysunspec2 for the data handling and `pymodbus`_ for the communications.
 
-.. _Qtrio: https://qtrio.readthedocs.io/en/stable/
-.. _SunSpec: https://sunspec.org/
+.. _Trio: https://trio.readthedocs.io/
+.. _SunSpec organization: https://sunspec.org/
+.. _Modbus: https://en.wikipedia.org/wiki/Modbus
+.. _pysunspec2: https://github.com/sunspec/pysunspec2
+.. _pymodbus: https://pymodbus.readthedocs.io/
 
 
 Installation
@@ -43,78 +48,51 @@ For a quick introduction, see `Python Virtual Environments in Five Minutes <virt
 
     .. code-block:: console
 
-        $ myvenv/bin/pip install git+https://github.com/altendky/ssst
+        $ myvenv/bin/pip install git+https://github.com/altendky/sundog
 
 .. tab:: Windows
 
     .. code-block:: console
 
-        $ myvenv/scripts/pip install git+https://github.com/altendky/ssst
+        $ myvenv/scripts/pip install git+https://github.com/altendky/sundog
 
 .. _virtual_environments: https://chriswarrick.com/blog/2018/09/04/python-virtual-environments/
 
 
-Running
--------
-
-Two main means of launching the application are provided.
-A directly runnable console script and a Python module runnable using ``python -m``.
-
-.. tab:: Unix/macOS
-
-    .. code-block:: console
-
-        $ myvenv/bin/ssst gui
-
-    .. code-block:: console
-
-        $ myvenv/bin/python -m ssst gui
-
-.. tab:: Windows
-
-    .. code-block:: console
-
-        $ myvenv/scripts/ssst gui
-
-    .. code-block:: console
-
-        $ myvenv/scripts/python -m ssst gui
-
-
-.. _documentation: https://ssst.readthedocs.io
+.. _documentation: https://sundog.readthedocs.io
 .. |documentation badge| image:: https://img.shields.io/badge/docs-read%20now-blue.svg?color=royalblue&logo=Read-the-Docs&logoColor=whitesmoke
    :target: `documentation`_
    :alt: Documentation
 
-.. _distribution: https://pypi.org/project/ssst
-.. |version badge| image:: https://img.shields.io/pypi/v/ssst.svg?color=indianred&logo=PyPI&logoColor=whitesmoke
+.. _distribution: https://pypi.org/project/sundog
+.. |version badge| image:: https://img.shields.io/pypi/v/sundog.svg?color=indianred&logo=PyPI&logoColor=whitesmoke
    :target: `distribution`_
    :alt: Latest distribution version
 
-.. |python versions badge| image:: https://img.shields.io/pypi/pyversions/ssst.svg?color=indianred&logo=PyPI&logoColor=whitesmoke
+.. |python versions badge| image:: https://img.shields.io/pypi/pyversions/sundog.svg?color=indianred&logo=PyPI&logoColor=whitesmoke
    :alt: Supported Python versions
    :target: `distribution`_
 
-.. |python interpreters badge| image:: https://img.shields.io/pypi/implementation/ssst.svg?color=indianred&logo=PyPI&logoColor=whitesmoke
+.. |python interpreters badge| image:: https://img.shields.io/pypi/implementation/sundog.svg?color=indianred&logo=PyPI&logoColor=whitesmoke
    :alt: Supported Python interpreters
    :target: `distribution`_
 
-.. _issues: https://github.com/altendky/ssst/issues
-.. |issues badge| image:: https://img.shields.io/github/issues/altendky/ssst?color=royalblue&logo=GitHub&logoColor=whitesmoke
+.. _issues: https://github.com/altendky/sundog/issues
+.. |issues badge| image:: https://img.shields.io/github/issues/altendky/sundog?color=royalblue&logo=GitHub&logoColor=whitesmoke
    :target: `issues`_
    :alt: Issues
 
-.. _repository: https://github.com/altendky/ssst
-.. |repository badge| image:: https://img.shields.io/github/last-commit/altendky/ssst.svg?color=seagreen&logo=GitHub&logoColor=whitesmoke
+.. _repository: https://github.com/altendky/sundog
+.. |repository badge| image:: https://img.shields.io/github/last-commit/altendky/sundog.svg?color=seagreen&logo=GitHub&logoColor=whitesmoke
    :target: `repository`_
    :alt: Repository
 
-.. _tests: https://github.com/altendky/ssst/actions?query=branch%3Amain
-.. |tests badge| image:: https://img.shields.io/github/workflow/status/altendky/ssst/CI/main?color=seagreen&logo=GitHub-Actions&logoColor=whitesmoke
+.. _tests: https://github.com/altendky/sundog/actions?query=branch%3Amain
+.. |tests badge| image:: https://img.shields.io/github/workflow/status/altendky/sundog/CI/main?color=seagreen&logo=GitHub-Actions&logoColor=whitesmoke
    :target: `tests`_
    :alt: Tests
 
-.. _coverage: https://codecov.io/gh/altendky/ssst
-.. |coverage badge| image:: https://img.shields.io/codecov/c/github/altendky/ssst/main?color=seagreen&logo=Codecov&logoColor=whitesmoke
+.. _coverage: https://codecov.io/gh/altendky/sundog
+.. |coverage badge| image:: https://img.shields.io/codecov/c/github/altendky/sundog/main?color=seagreen&logo=Codecov&logoColor=whitesmoke
    :target: `coverage`_
    :alt: Test coverage

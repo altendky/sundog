@@ -3,13 +3,12 @@ target-version =  ['py36', 'py37', 'py38']
 include = '''
 ^/(
     setup.py
-    | freeze/pyinstaller.spec
-    | src/ssst/.*\.pyi?
+    | src/sundog/.*\.pyi?
 )$
 '''
 exclude = '''
 ^/(
-    src/ssst/_version.py
+    src/sundog/_version.py
     | versioneer.py
 )$
 '''

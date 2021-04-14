@@ -1,11 +1,11 @@
 [tool.towncrier]
-package = "ssst"
+package = "sundog"
 # https://github.com/twisted/towncrier/pull/271
-# name = "SSST"
+# name = "sundog"
 filename = "docs/source/history.rst"
 directory = "newsfragments"
 underlines = ["-", "~", "^"]
-issue_format = "`#{issue} <https://github.com/altendky/ssst/issues/{issue}>`__"
+issue_format = "`#{issue} <https://github.com/altendky/sundog/issues/{issue}>`__"
 
 [[tool.towncrier.type]]
 directory = "headline"

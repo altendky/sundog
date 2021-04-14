@@ -1,26 +1,25 @@
-import ssst._tests.conftest
-import ssst.sunspec
-import ssst.sunspec.client
+import sundog._tests.conftest
+import sundog.client
 
 
 async def test_base_address_marker(
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_client: sundog.client.Client,
 ) -> None:
     register_bytes = await sunspec_client.read_registers(address=40_000, count=2)
 
-    assert register_bytes == ssst.sunspec.base_address_sentinel
+    assert register_bytes == sundog.base_address_sentinel
 
 
 async def test_addresses(
-    sunspec_server: ssst._tests.conftest.SunSpecServerFixtureResult,
+    sunspec_server: sundog._tests.conftest.SunSpecServerFixtureResult,
 ) -> None:
     point = sunspec_server.server[17].points["Bits"]
     assert point.model.model_addr + point.offset == 40_078
 
 
 async def test_write_registers(
-    sunspec_server: ssst._tests.conftest.SunSpecServerFixtureResult,
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_server: sundog._tests.conftest.SunSpecServerFixtureResult,
+    sunspec_client: sundog.client.Client,
 ) -> None:
     model = sunspec_server.server[1]
     point = model.points["DA"]
@@ -34,8 +33,8 @@ async def test_write_registers(
 
 
 async def test_read_bus_value_scaled_as_expected(
-    sunspec_server: ssst._tests.conftest.SunSpecServerFixtureResult,
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_server: sundog._tests.conftest.SunSpecServerFixtureResult,
+    sunspec_client: sundog.client.Client,
 ) -> None:
     server_point = sunspec_server.server[103].points["W"]
     server_scale_factor_point = server_point.model.points[server_point.sf]

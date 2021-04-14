@@ -30,8 +30,6 @@ sys.path.insert(0, os.path.abspath("../.."))
 nitpicky = True
 # Except for these ones, which we expect to point to unknown targets:
 nitpick_ignore = [
-    # TODO: maybe fix this?  add docs for the UI classes?
-    ("py:class", "ssst.gui.main_ui.Ui_MainWindow"),
 ]
 
 # -- General configuration ------------------------------------------------
@@ -51,7 +49,6 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx_autodoc_typehints",
     "sphinx_inline_tabs",
-    "sphinx_qt_documentation",
     "sphinxcontrib_trio",
 ]
 
@@ -59,11 +56,8 @@ intersphinx_mapping = {
     "outcome": ("https://outcome.readthedocs.io/en/stable", None),
     "python": ("https://docs.python.org/3", None),
     "pymodbus": ("https://pymodbus.readthedocs.io/en/stable", None),
-    "PyQt5": ("https://www.riverbankcomputing.com/static/Docs/PyQt5", None),
-    "PySide2": ("https://doc.qt.io/qtforpython", None),
     "pytest": ("https://docs.pytest.org/en/stable", None),
     "pytest-trio": ("https://pytest-trio.readthedocs.io/en/stable", None),
-    "qtrio": ("https://qtrio.readthedocs.io/en/stable", None),
     "trio": ("https://trio.readthedocs.io/en/stable", None),
 }
 
@@ -103,9 +97,9 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "SSST"
-copyright = "The SSST authors"
-author = "The SSST authors"
+project = "sundog"
+copyright = "The sundog authors"
+author = "The sundog authors"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -114,7 +108,7 @@ author = "The SSST authors"
 # The short X.Y version.
 import importlib_metadata
 
-version = importlib_metadata.version("ssst")
+version = importlib_metadata.version("sundog")
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -127,7 +121,7 @@ def process_newsfragments():
     # TODO: needs released https://github.com/twisted/towncrier/commit/5c431028a3b699c74b162014e907272cbea8ac81
     bin = pathlib.Path(sysconfig.get_path("scripts"))
     subprocess.run(
-        [bin / "towncrier", "build", "--yes", "--name", "SSST"],
+        [bin / "towncrier", "build", "--yes", "--name", "sundog"],
         check=True,
         cwd="../..",
     )
@@ -196,7 +190,7 @@ html_static_path = ["_static"]
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "ssstdoc"
+htmlhelp_basename = "sundogdoc"
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -220,7 +214,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "ssst.tex", "SSST Documentation", author, "manual"),
+    (master_doc, "sundog.tex", "sundog Documentation", author, "manual"),
 ]
 
 
@@ -228,7 +222,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "ssst", "SSST Documentation", [author], 1)]
+man_pages = [(master_doc, "sundog", "sundog Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output -------------------------------------------
@@ -239,10 +233,10 @@ man_pages = [(master_doc, "ssst", "SSST Documentation", [author], 1)]
 texinfo_documents = [
     (
         master_doc,
-        "ssst",
-        "SSST Documentation",
+        "sundog",
+        "sundog Documentation",
         author,
-        "SSST",
+        "sundog",
         ""
         "",
         "Miscellaneous",

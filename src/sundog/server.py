@@ -10,7 +10,7 @@ import sunspec2.mb
 import sunspec2.modbus.client
 import trio
 
-import ssst.sunspec
+import sundog
 
 
 base_address = 40_000
@@ -57,7 +57,7 @@ class SunSpecModbusSlaveContext(pymodbus.interfaces.IModbusSlaveContext):
         )
         data = bytearray(request.data)
         data[request.slice] = values
-        self.sunspec_device.set_mb(data=data[len(ssst.sunspec.base_address_sentinel) :])
+        self.sunspec_device.set_mb(data=data[len(sundog.base_address_sentinel) :])
 
     def validate(self, fx: int, address: int, count: int = 1) -> bool:
         """See :meth:`pymodbus.interfaces.IModbusSlaveContext.validate`."""
@@ -74,7 +74,7 @@ class SunSpecModbusSlaveContext(pymodbus.interfaces.IModbusSlaveContext):
             base_address
             + (
                 (
-                    len(ssst.sunspec.base_address_sentinel)
+                    len(sundog.base_address_sentinel)
                     + len(self.sunspec_device.get_mb())
                 )
                 // 2
@@ -124,7 +124,7 @@ class Server:
         Returns:
             The instance of the server datastore pieces.
         """
-        address = base_address + len(ssst.sunspec.base_address_sentinel) // 2
+        address = base_address + len(sundog.base_address_sentinel) // 2
         sunspec_device = sunspec2.modbus.client.SunSpecModbusClientDevice()
         sunspec_device.base_addr = base_address
 
@@ -216,7 +216,7 @@ class PreparedRequest:
         """
         # This is super lazy, what with building _all_ data even if you only need a
         # register or two.  But, optimize when we need to.
-        data = bytearray(ssst.sunspec.base_address_sentinel)
+        data = bytearray(sundog.base_address_sentinel)
         data.extend(all_registers)
         data.extend(
             sunspec2.mb.SUNS_END_MODEL_ID.to_bytes(

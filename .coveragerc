@@ -13,11 +13,10 @@ exclude_lines =
   ^\s*pass\s*$
   ^\s*...\s*$
 omit =
-  *_ui.py
-  src/ssst/_version.py
+  src/sundog/_version.py
   versioneer.py
 
 [run]
 branch = True
 source =
-    ssst
+    sundog

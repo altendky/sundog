@@ -2,53 +2,53 @@ import re
 
 import pytest
 
-import ssst._tests.conftest
-import ssst.sunspec.client
-import ssst.sunspec.server
+import sundog._tests.conftest
+import sundog.client
+import sundog.server
 
 
-async def test_scan_adds_models(sunspec_client: ssst.sunspec.client.Client) -> None:
+async def test_scan_adds_models(sunspec_client: sundog.client.Client) -> None:
     model_ids = [model.model_id for model in sunspec_client.sunspec_device.model_list]
 
     assert model_ids == [1, 17, 103, 126]
 
 
 async def test_scan_raises_for_missing_sentinel_when_searching(
-    unscanned_sunspec_client: ssst.sunspec.client.Client,
+    unscanned_sunspec_client: sundog.client.Client,
 ) -> None:
     unscanned_sunspec_client.sunspec_device.base_addr_list[:] = [40_010, 40_020]
 
     message = "SunSpec sentinel b'SunS' not found while searching: 40010, 40020"
-    with pytest.raises(ssst.BaseAddressNotFoundError, match=f"^{re.escape(message)}$"):
+    with pytest.raises(sundog.BaseAddressNotFoundError, match=f"^{re.escape(message)}$"):
         await unscanned_sunspec_client.scan()
 
 
 async def test_scan_raises_for_missing_sentinel_when_address_specified(
-    unscanned_sunspec_client: ssst.sunspec.client.Client,
+    unscanned_sunspec_client: sundog.client.Client,
 ) -> None:
     unscanned_sunspec_client.sunspec_device.base_addr = 40_001
 
     message = r"SunSpec sentinel b'SunS' not found at 40001: b'nS\x00\x01'"
-    with pytest.raises(ssst.InvalidBaseAddressError, match=f"^{re.escape(message)}$"):
+    with pytest.raises(sundog.InvalidBaseAddressError, match=f"^{re.escape(message)}$"):
         await unscanned_sunspec_client.scan()
 
 
-async def test_model_addresses(sunspec_client: ssst.sunspec.client.Client) -> None:
+async def test_model_addresses(sunspec_client: sundog.client.Client) -> None:
     model_ids = [model.model_addr for model in sunspec_client.sunspec_device.model_list]
 
     assert model_ids == [40_002, 40_070, 40_084, 40_136]
 
 
 async def test_point_address(
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_client: sundog.client.Client,
 ) -> None:
     point = sunspec_client[17].points["Bits"]
     assert point.model.model_addr + point.offset == 40_078
 
 
 async def test_read_point_by_registers(
-    sunspec_server: ssst._tests.conftest.SunSpecServerFixtureResult,
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_server: sundog._tests.conftest.SunSpecServerFixtureResult,
+    sunspec_client: sundog.client.Client,
 ) -> None:
     model = sunspec_server.server[1]
     point = model.points["DA"]
@@ -66,8 +66,8 @@ async def test_read_point_by_registers(
 
 
 async def test_read_point(
-    sunspec_server: ssst._tests.conftest.SunSpecServerFixtureResult,
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_server: sundog._tests.conftest.SunSpecServerFixtureResult,
+    sunspec_client: sundog.client.Client,
 ) -> None:
     new_id = 43928
 
@@ -82,8 +82,8 @@ async def test_read_point(
 
 
 async def test_read_point_with_scale_factor(
-    sunspec_server: ssst._tests.conftest.SunSpecServerFixtureResult,
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_server: sundog._tests.conftest.SunSpecServerFixtureResult,
+    sunspec_client: sundog.client.Client,
 ) -> None:
     server_point = sunspec_server.server[103].points["W"]
     server_scale_factor_point = server_point.model.points[server_point.sf]
@@ -105,8 +105,8 @@ async def test_read_point_with_scale_factor(
 
 
 async def test_write_point_by_registers(
-    sunspec_server: ssst._tests.conftest.SunSpecServerFixtureResult,
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_server: sundog._tests.conftest.SunSpecServerFixtureResult,
+    sunspec_client: sundog.client.Client,
 ) -> None:
     new_id = 43928
 
@@ -123,8 +123,8 @@ async def test_write_point_by_registers(
 
 
 async def test_write_point(
-    sunspec_server: ssst._tests.conftest.SunSpecServerFixtureResult,
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_server: sundog._tests.conftest.SunSpecServerFixtureResult,
+    sunspec_client: sundog.client.Client,
 ) -> None:
     new_id = 43928
 
@@ -138,8 +138,8 @@ async def test_write_point(
 
 
 async def test_write_point_with_scale_factor(
-    sunspec_server: ssst._tests.conftest.SunSpecServerFixtureResult,
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_server: sundog._tests.conftest.SunSpecServerFixtureResult,
+    sunspec_client: sundog.client.Client,
 ) -> None:
     point = sunspec_client[103].points["W"]
     scale_factor_point = point.model.points[point.sf]
@@ -163,14 +163,14 @@ async def test_write_point_with_scale_factor(
 
 
 async def test_read_modbus_exception_raises(
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_client: sundog.client.Client,
 ) -> None:
-    with pytest.raises(ssst.ModbusError):
+    with pytest.raises(sundog.ModbusError):
         await sunspec_client.read_registers(address=0, count=1)
 
 
 async def test_write_modbus_exception_raises(
-    sunspec_client: ssst.sunspec.client.Client,
+    sunspec_client: sundog.client.Client,
 ) -> None:
-    with pytest.raises(ssst.ModbusError):
+    with pytest.raises(sundog.ModbusError):
         await sunspec_client.write_registers(address=0, values=b":]")

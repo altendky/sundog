@@ -1,6 +1,6 @@
 Release History
 ===============
 
-.. currentmodule:: ssst
+.. currentmodule:: sundog
 
 .. towncrier release notes start

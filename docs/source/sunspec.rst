@@ -3,13 +3,13 @@ SunSpec
 
 Client
 ------
-.. autofunction:: ssst.sunspec.client.open_client
-.. autoclass:: ssst.sunspec.client.Client
+.. autofunction:: sundog.client.open_client
+.. autoclass:: sundog.client.Client
 
 
 Server
 ------
-.. autoclass:: ssst.sunspec.server.Server
-.. autoclass:: ssst.sunspec.server.ModelSummary
-.. autoclass:: ssst.sunspec.server.SunSpecModbusSlaveContext
-.. autoclass:: ssst.sunspec.server.PreparedRequest
+.. autoclass:: sundog.server.Server
+.. autoclass:: sundog.server.ModelSummary
+.. autoclass:: sundog.server.SunSpecModbusSlaveContext
+.. autoclass:: sundog.server.PreparedRequest
