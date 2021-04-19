@@ -73,10 +73,7 @@ class SunSpecModbusSlaveContext(pymodbus.interfaces.IModbusSlaveContext):
         return (
             base_address
             + (
-                (
-                    len(sundog.base_address_sentinel)
-                    + len(self.sunspec_device.get_mb())
-                )
+                (len(sundog.base_address_sentinel) + len(self.sunspec_device.get_mb()))
                 // 2
             )
             + 2

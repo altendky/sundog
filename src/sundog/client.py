@@ -104,9 +104,7 @@ class Client:
                     value=read_bytes,
                 )
 
-        address = (
-            self.sunspec_device.base_addr + len(sundog.base_address_sentinel) // 2
-        )
+        address = self.sunspec_device.base_addr + len(sundog.base_address_sentinel) // 2
         model_id_length = 1
         model_length_length = 1
 
