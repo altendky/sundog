@@ -28,7 +28,7 @@ class BaseAddressNotFoundError(SundogError):
     __module__ = "sundog"
 
 
-class InternalError(Exception):
+class InternalError(SundogError):
     """Raised when things that should not happen do, and they aren't the user's fault."""
 
     # https://github.com/sphinx-doc/sphinx/issues/7493
