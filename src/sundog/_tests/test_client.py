@@ -19,7 +19,9 @@ async def test_scan_raises_for_missing_sentinel_when_searching(
     unscanned_sunspec_client.sunspec_device.base_addr_list[:] = [40_010, 40_020]
 
     message = "SunSpec sentinel b'SunS' not found while searching: 40010, 40020"
-    with pytest.raises(sundog.BaseAddressNotFoundError, match=f"^{re.escape(message)}$"):
+    with pytest.raises(
+        sundog.BaseAddressNotFoundError, match=f"^{re.escape(message)}$"
+    ):
         await unscanned_sunspec_client.scan()
 
 
