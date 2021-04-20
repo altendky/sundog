@@ -1,7 +1,6 @@
 [tool.towncrier]
 package = "sundog"
-# https://github.com/twisted/towncrier/pull/271
-# name = "sundog"
+name = "sundog"
 filename = "docs/source/history.rst"
 directory = "newsfragments"
 underlines = ["-", "~", "^"]
