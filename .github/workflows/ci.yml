@@ -98,7 +98,7 @@ jobs:
         run: |
           pip install --upgrade pip setuptools wheel
           pip install --upgrade tox
-      - uses: twisted/python-info-action@v1.0.1
+      - uses: twisted/python-info-action@v1
       - name: Setup tox environment
         run: |
           tox -vv --notest -e ${{ matrix.task.tox }}-${{ matrix.python.tox }}
@@ -154,7 +154,7 @@ jobs:
         run: |
           pip install --upgrade pip setuptools wheel
           pip install --upgrade tox
-      - uses: twisted/python-info-action@v1.0.1
+      - uses: twisted/python-info-action@v1
       - name: Setup tox environment
         run: |
           tox -vv --notest -e ${{ matrix.task.tox }}
