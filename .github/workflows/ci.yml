@@ -54,27 +54,33 @@ jobs:
             tox: py36
             action: 3.6
             docker: 3.6
+            implementation: cpython
           - name: CPython 3.7
             tox: py37
             action: 3.7
             docker: 3.7
+            implementation: cpython
           - name: CPython 3.8
             tox: py38
             action: 3.8
             docker: 3.8
+            implementation: cpython
           - name: CPython 3.9
             tox: py39
             action: 3.9
             docker: 3.9
+            implementation: cpython
           # https://github.com/altendky/sundog/pull/8#issuecomment-830448994  
           # - name: PyPy 3.6
           #   tox: pypy36
           #   action: pypy-3.6
           #   docker: pypy3.6
+          #   implementation: pypy
           - name: PyPy 3.7
             tox: pypy37
             action: pypy-3.7
             docker: pypy3.7
+            implementation: pypy
         arch:
           - name: x86
             action: x86
@@ -91,6 +97,12 @@ jobs:
               matrix: macos
             arch:
               matrix: x86
+          - os:
+              matrix: windows
+            arch:
+              matrix: x64
+            python:
+              implementation: pypy
     env:
       # Should match name above
       JOB_NAME: ${{ matrix.task.name }} - ${{ matrix.os.name }} ${{ matrix.python.name }} ${{ matrix.arch.name }}
