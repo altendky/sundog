@@ -59,6 +59,19 @@ For a quick introduction, see `Python Virtual Environments in Five Minutes <virt
 .. _virtual_environments: https://chriswarrick.com/blog/2018/09/04/python-virtual-environments/
 
 
+The Name
+--------
+
+`Sun dogs <wikipedia_general_>`_ are a pair of bright spots to either side of the sun created by the refraction of sunlight through ice crystals in the atmosphere.
+The usage of dog in this case is `that of a verb meaning to hunt, track, or follow <wikipedia_etymology_>`_.
+The two false suns will follow, or dog, the true sun through the sky.
+With the two false suns following the one true sun we have a trio of suns.
+Thus, here we are with the sundog library implementing SunSpec using Trio.
+
+.. _wikipedia_general: https://en.wikipedia.org/wiki/Sun_dog
+.. _wikipedia_etymology: https://en.wikipedia.org/wiki/Sun_dog#Etymology
+
+
 .. _documentation: https://sundog.readthedocs.io
 .. |documentation badge| image:: https://img.shields.io/badge/docs-read%20now-blue.svg?color=royalblue&logo=Read-the-Docs&logoColor=whitesmoke
    :target: `documentation`_
