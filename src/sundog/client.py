@@ -115,9 +115,7 @@ class Client:
                 address=address, count=model_id_length
             )
             intra_model_address += model_id_length
-            maybe_model_id = int.from_bytes(
-                bytes=read_bytes, byteorder="big", signed=False
-            )
+            maybe_model_id = int.from_bytes(read_bytes, byteorder="big", signed=False)
             if maybe_model_id == sunspec2.mb.SUNS_END_MODEL_ID:
                 break
 
@@ -127,9 +125,7 @@ class Client:
                 address=intra_model_address, count=model_length_length
             )
             intra_model_address += model_length_length
-            model_length = int.from_bytes(
-                bytes=read_bytes, byteorder="big", signed=False
-            )
+            model_length = int.from_bytes(read_bytes, byteorder="big", signed=False)
 
             # TODO: oof, awkward way to write this it seems
             whole_model_length = (intra_model_address - address) + model_length

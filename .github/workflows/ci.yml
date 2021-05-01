@@ -39,7 +39,8 @@ jobs:
               3.8: docker://python:3.8-buster
               3.9: docker://python:3.9-buster
               pypy2: docker://pypy:2-jessie
-              pypy3: docker://pypy:3-stretch
+              pypy3.6: docker://pypy:3.6-buster
+              pypy3.7: docker://pypy:3.7-buster
           - name: Windows
             runs-on: windows-latest
             python_platform: win32
@@ -53,18 +54,33 @@ jobs:
             tox: py36
             action: 3.6
             docker: 3.6
+            implementation: cpython
           - name: CPython 3.7
             tox: py37
             action: 3.7
             docker: 3.7
+            implementation: cpython
           - name: CPython 3.8
             tox: py38
             action: 3.8
             docker: 3.8
+            implementation: cpython
           - name: CPython 3.9
             tox: py39
             action: 3.9
             docker: 3.9
+            implementation: cpython
+          # https://github.com/altendky/sundog/pull/8#issuecomment-830448994  
+          # - name: PyPy 3.6
+          #   tox: pypy36
+          #   action: pypy-3.6
+          #   docker: pypy3.6
+          #   implementation: pypy
+          - name: PyPy 3.7
+            tox: pypy37
+            action: pypy-3.7
+            docker: pypy3.7
+            implementation: pypy
         arch:
           - name: x86
             action: x86
@@ -81,6 +97,12 @@ jobs:
               matrix: macos
             arch:
               matrix: x86
+          - os:
+              matrix: windows
+            arch:
+              matrix: x64
+            python:
+              implementation: pypy
     env:
       # Should match name above
       JOB_NAME: ${{ matrix.task.name }} - ${{ matrix.os.name }} ${{ matrix.python.name }} ${{ matrix.arch.name }}
@@ -92,7 +114,15 @@ jobs:
         if: job.container == ''
         uses: actions/setup-python@v2
         with:
-          python-version: '${{ matrix.python.action }}.0-alpha - ${{ matrix.python.action }}.X'
+          # This allows the matrix to specify just the major.minor version while still
+          # expanding it to get the latest patch version including alpha releases.
+          # This avoids the need to update for each new alpha, beta, release candidate,
+          # and then finally an actual release version.  actions/setup-python doesn't
+          # support this for PyPy presently so we get no help there.
+          #
+          # CPython -> 3.9.0-alpha - 3.9.X
+          # PyPy    -> pypy-3.7
+          python-version: ${{ fromJSON(format('["{0}", "{1}"]', format('{0}.0-alpha - {0}.X', matrix.python.action), matrix.python.action))[startsWith(matrix.python.action, 'pypy')] }}
           architecture: '${{ matrix.arch.action }}'
       - name: Install tox
         run: |
